@@ -5,7 +5,7 @@ button.addEventListener('click', () => {
     console.log(position);
 var lat = position.coords.latitude;
 var lon = position.coords.longitude;
-document.querySelector(".position").innerText = lat + ' ' + lon;
+document.querySelector(".position").innerText = 'Your position: ' + lat + ', ' + lon;
 $.ajax({
     url: 'https://airapi.airly.eu/v1/nearestSensor/measurements?latitude=' + lat + '&longitude=' + lon + '&maxDistance=1000',
     headers: {'apikey': '6777c55a879246c99c1242bea6bb7ac9'},
@@ -19,7 +19,13 @@ $.ajax({
         const pm10perc = (response.pm10/pm10standard24h*100).toFixed(2);
         const pm25perc = (response.pm25/pm25standard24h*100).toFixed(2);
         const street = response.address.route;
-        document.querySelector(".air").innerText = street + ', PM2.5: ' + pm25 + ', PM10: ' + pm10;
+        const city = response.address.locality;
+        const country = response.address.country;
+        const distance = response.distance.toFixed(2);
+
+        document.querySelector(".point").innerText = 'Measuring point: ' + street + ', ' + city + ', ' + country;
+        document.querySelector(".air").innerText =  'Air quality: PM2.5: ' + pm25.toFixed(2) + 'µg/m3 ' + ', PM10: ' + pm10.toFixed(2) + 'µg/m3 ';
+        document.querySelector(".distance").innerText = 'Distance: ' + distance + 'm';
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
