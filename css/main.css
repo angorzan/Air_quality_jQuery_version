@@ -5,6 +5,10 @@ body {
   background-size: 100%;
 }
 
+.container{
+    width:800px;
+}
+
 body, button {
   font-family: 'Raleway', 'Arial', sans-serif; }
 
